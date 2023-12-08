@@ -1,7 +1,9 @@
 package main
 
-import "github.com/churmd/adventofcode2023/day1"
+import (
+	"github.com/churmd/adventofcode2023/day2"
+)
 
 func main() {
-	day1.Solve()
+	day2.Solution()
 }
