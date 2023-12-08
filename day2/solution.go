@@ -23,6 +23,15 @@ func Solution() {
 	fmt.Printf("%d\n", sumOfgameIds)
 }
 
+func Solution2() {
+	games := parseInput(input)
+	gamePowers := higherorder.Map(power, games)
+	sumOfGamePowers := higherorder.Foldl(func(x, y int) int { return x + y }, 0, gamePowers)
+
+	fmt.Println("For each game, find the minimum set of cubes that must have been present.\nWhat is the sum of the power of these sets?")
+	fmt.Printf("%d\n", sumOfGamePowers)
+}
+
 type Round struct {
 	Red   int `json:"red"`
 	Green int `json:"green"`
@@ -103,4 +112,28 @@ func isGameValid(game Game, red, green, blue int) bool {
 	}
 
 	return true
+}
+
+func power(game Game) int {
+	reds := make([]int, 0)
+	greens := make([]int, 0)
+	blues := make([]int, 0)
+	for _, round := range game.Rounds {
+		reds = append(reds, round.Red)
+		greens = append(greens, round.Green)
+		blues = append(blues, round.Blue)
+	}
+	
+	return myMax(reds) * myMax(greens) * myMax(blues)
+}
+
+func myMax(values []int) int {
+	max := 0
+	for _, v := range values {
+		if v > max {
+			max = v
+		}
+	}
+
+	return max
 }
